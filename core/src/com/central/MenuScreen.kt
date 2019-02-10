@@ -7,14 +7,13 @@ import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.scenes.scene2d.Group
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent
-import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
+import ktx.actors.plusAssign
 
 class MenuScreen : Screen, InputProcessor {
     protected var uiTable = Table()
@@ -54,7 +53,7 @@ class MenuScreen : Screen, InputProcessor {
         uiTable.add(quitButton)
 
         uiTable.setFillParent(true)
-        MyGameObj.uiStage.addActor(uiTable)
+        MyGameObj.uiStage += uiTable
     }
 
     override fun render(delta: Float) {

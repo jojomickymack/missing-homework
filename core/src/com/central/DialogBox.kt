@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
+import ktx.actors.plusAssign
 
 class DialogBox : Table() {
     val dialogLabel = Label("hi, this is my thing ", MyGameObj.labelStyle)
@@ -21,7 +22,7 @@ class DialogBox : Table() {
         dialogLabel.setAlignment(Align.topLeft)
         dialogLabel.setPosition(padding, padding)
         this.setDialogSize(width, height)
-        this.addActor(dialogLabel)
+        this += dialogLabel
     }
 
     override fun act(delta: Float) {

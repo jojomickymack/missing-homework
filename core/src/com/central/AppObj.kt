@@ -3,7 +3,7 @@ package com.central
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
-import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.Color.*
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.Texture.TextureFilter
@@ -45,18 +45,23 @@ object AppObj {
 
     init {
         Gdx.input.inputProcessor = im
-        fontParameters.size = 24
-        fontParameters.color = Color.WHITE
-        fontParameters.borderWidth = 2f
-        fontParameters.borderColor = Color.BLACK
-        fontParameters.borderStraight = true
-        fontParameters.minFilter = TextureFilter.Linear
-        fontParameters.magFilter = TextureFilter.Linear
+
+        with(fontParameters) {
+            size = 24
+            color = WHITE
+            borderWidth = 2f
+            borderColor = BLACK
+            borderStraight = true
+            minFilter = TextureFilter.Linear
+            magFilter = TextureFilter.Linear
+        }
 
         labelStyle.font = customFont
 
-        textButtonStyle.up = NinePatchDrawable(buttonPatch)
-        textButtonStyle.font = customFont
-        textButtonStyle.fontColor = Color.GRAY
+        with(textButtonStyle) {
+            up = NinePatchDrawable(buttonPatch)
+            font = customFont
+            fontColor = GRAY
+        }
     }
 }

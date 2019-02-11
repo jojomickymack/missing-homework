@@ -32,9 +32,6 @@ class StoryScreen : Screen, InputProcessor {
     var dialogBox = DialogBox()
 
     init {
-        AppObj.mainStage.clear()
-        AppObj.uiStage.clear()
-
         dialogBox.setDialogSize(AppObj.mainStage.width, AppObj.mainStage.height / 3)
         dialogBox.bgImage.color = Color(0.25f, 0.25f, 0.25f, 1f)
 
@@ -43,36 +40,46 @@ class StoryScreen : Screen, InputProcessor {
         continueKey.setSize(32f, 32f)
         continueKey.setPosition(dialogBox.width - continueKey.width, 0f)
 
-        uiTable.add(buttonTable)
-        uiTable.row()
-        uiTable.row().expandY()
-        uiTable.add(dialogBox)
+        with(uiTable) {
+            add(buttonTable)
+            row()
+            row().expandY()
+            add(dialogBox)
+            setFillParent(true)
+        }
 
-        uiTable.setFillParent(true)
+        with(theEnd) {
+            setSize(AppObj.mainStage.width, AppObj.mainStage.height / 3)
+            setPosition(AppObj.mainStage.width / 2 - width / 2, AppObj.mainStage.height / 2 - height / 2)
+            alpha = 0f
+        }
 
-        theEnd.setSize(AppObj.mainStage.width, AppObj.mainStage.height / 3)
-        theEnd.setPosition(AppObj.mainStage.width / 2 - theEnd.width / 2, AppObj.mainStage.height / 2 - theEnd.height / 2)
-        theEnd.alpha = 0f
+        with(AppObj) {
+            mainStage.clear()
+            uiStage.clear()
 
-        AppObj.mainStage += background
-        AppObj.mainStage += dude
-        AppObj.mainStage += theEnd
+            mainStage += background
+            mainStage += dude
+            mainStage += theEnd
 
-        AppObj.uiStage += uiTable
-        AppObj.uiStage += continueKey
+            uiStage += uiTable
+            uiStage += continueKey
+        }
 
         hallway()
     }
 
     override fun render(delta: Float) {
-        AppObj.uiStage.act(delta)
-        AppObj.mainStage.act(delta)
-
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
-        AppObj.mainStage.draw()
-        AppObj.uiStage.draw()
+        with(AppObj) {
+            uiStage.act(delta)
+            mainStage.act(delta)
+
+            mainStage.draw()
+            uiStage.draw()
+        }
     }
 
     fun hallway() {
@@ -83,6 +90,7 @@ class StoryScreen : Screen, InputProcessor {
 
         dude.x = -50f
 
+        // is it weird to have the dialogbox's label be driving all of the events? Kind of, but it doesn't really matter
         dialogBox.dialogLabel += sequence(
                 Actions.run {
                     dude += moveToAligned(AppObj.mainStage.width / 2, 0f, Align.bottom, 2f)

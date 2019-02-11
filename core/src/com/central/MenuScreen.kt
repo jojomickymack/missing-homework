@@ -19,17 +19,12 @@ class MenuScreen : Screen, InputProcessor {
     private var uiTable = Table()
 
     init {
-        AppObj.mainStage.clear()
-        AppObj.uiStage.clear()
-
         val notebook = Image(Texture("notebook.jpg"))
         notebook.setPosition(0f, 0f)
         notebook.setSize(800f, 600f)
-        AppObj.mainStage += notebook
 
         val title = Image(Texture("missing-homework.png"))
         title.setPosition(0f, 0f)
-        AppObj.mainStage += title
 
         val startButton = TextButton("Start", AppObj.textButtonStyle)
 
@@ -47,27 +42,34 @@ class MenuScreen : Screen, InputProcessor {
             }
         })
 
-        uiTable.add(title).colspan(2)
-        uiTable.row()
-        uiTable.add(startButton)
-        uiTable.add(quitButton)
-        uiTable.setFillParent(true)
+        with(uiTable) {
+            add(title).colspan(2)
+            row()
+            add(startButton)
+            add(quitButton)
+            setFillParent(true)
+        }
 
-        AppObj.uiStage += uiTable
+        with(AppObj) {
+            mainStage.clear()
+            uiStage.clear()
+
+            mainStage += notebook
+            uiStage += uiTable
+        }
     }
 
     override fun render(delta: Float) {
-        // act methods
-        AppObj.uiStage.act(delta)
-        AppObj.mainStage.act(delta)
-
-        // clear the screen
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
-        // draw the graphics
-        AppObj.mainStage.draw()
-        AppObj.uiStage.draw()
+        with(AppObj) {
+            uiStage.act(delta)
+            mainStage.act(delta)
+
+            mainStage.draw()
+            uiStage.draw()
+        }
     }
 
     override fun keyDown(keyCode: Int): Boolean {

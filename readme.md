@@ -4,5 +4,7 @@ This is an example from the book 'Java Game Development with LibGDX' by Lee Stem
 
 [https://www.apress.com/us/book/9781484233238](https://www.apress.com/us/book/9781484233238)  
 
-It's been refactored heavily but does the same thing as the example - this is intended to be a desktop game and it isn't 
-optimized for mobile screens and touch interfaces. Make sure to run the desktop launcher gradle task to see it work properly.
+It's been rewritten in kotlin and uses some libktx shortcuts to chain together Actions into sequnces. The Action that 
+progressively fills a dialog box with text is a handy reusable class.
+
+This works fine on mobile now, but it was originally designed for desktop only, and was actually written in BlueJay.

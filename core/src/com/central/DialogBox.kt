@@ -10,14 +10,15 @@ import com.badlogic.gdx.utils.Align
 import ktx.actors.plusAssign
 
 class DialogBox : Table() {
-    val dialogLabel = Label("hi, this is my thing ", MyGameObj.labelStyle)
+    val dialogLabel = Label("hi, this is my thing ", AppObj.labelStyle)
     private val padding = 16f
 
     private var animationPaused = false
 
-    var bgImage = Image(Texture("assets/dialog-translucent.png"))
+    var bgImage = Image(Texture("dialog-translucent.png"))
 
     init {
+        bgImage.setSize(AppObj.mainStage.width, AppObj.mainStage.height / 3)
         dialogLabel.setWrap(true)
         dialogLabel.setAlignment(Align.topLeft)
         dialogLabel.setPosition(padding, padding)

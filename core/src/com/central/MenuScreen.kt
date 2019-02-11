@@ -16,30 +16,30 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import ktx.actors.plusAssign
 
 class MenuScreen : Screen, InputProcessor {
-    protected var uiTable = Table()
+    private var uiTable = Table()
 
     init {
-        MyGameObj.mainStage.clear()
-        MyGameObj.uiStage.clear()
+        AppObj.mainStage.clear()
+        AppObj.uiStage.clear()
 
-        val notebook = Image(Texture("assets/notebook.jpg"))
+        val notebook = Image(Texture("notebook.jpg"))
         notebook.setPosition(0f, 0f)
         notebook.setSize(800f, 600f)
-        MyGameObj.mainStage.addActor(notebook)
+        AppObj.mainStage += notebook
 
-        val title = Image(Texture("assets/missing-homework.png"))
+        val title = Image(Texture("missing-homework.png"))
         title.setPosition(0f, 0f)
-        MyGameObj.mainStage.addActor(title)
+        AppObj.mainStage += title
 
-        val startButton = TextButton("Start", MyGameObj.textButtonStyle)
+        val startButton = TextButton("Start", AppObj.textButtonStyle)
 
         startButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent, x: Float, y: Float) {
-                MyGameObj.game.screen = StoryScreen()
+                AppObj.game.screen = StoryScreen()
             }
         })
 
-        val quitButton = TextButton("Quit", MyGameObj.textButtonStyle)
+        val quitButton = TextButton("Quit", AppObj.textButtonStyle)
 
         quitButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
@@ -51,28 +51,28 @@ class MenuScreen : Screen, InputProcessor {
         uiTable.row()
         uiTable.add(startButton)
         uiTable.add(quitButton)
-
         uiTable.setFillParent(true)
-        MyGameObj.uiStage += uiTable
+
+        AppObj.uiStage += uiTable
     }
 
     override fun render(delta: Float) {
         // act methods
-        MyGameObj.uiStage.act(delta)
-        MyGameObj.mainStage.act(delta)
+        AppObj.uiStage.act(delta)
+        AppObj.mainStage.act(delta)
 
         // clear the screen
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         // draw the graphics
-        MyGameObj.mainStage.draw()
-        MyGameObj.uiStage.draw()
+        AppObj.mainStage.draw()
+        AppObj.uiStage.draw()
     }
 
     override fun keyDown(keyCode: Int): Boolean {
         if (Gdx.input.isKeyPressed(Keys.ENTER))
-            MyGameObj.game.screen = StoryScreen()
+            AppObj.game.screen = StoryScreen()
 
         if (Gdx.input.isKeyPressed(Keys.ESCAPE))
             Gdx.app.exit()
@@ -83,15 +83,15 @@ class MenuScreen : Screen, InputProcessor {
     override fun show() {
         val im = Gdx.input.inputProcessor as InputMultiplexer
         im.addProcessor(this)
-        im.addProcessor(MyGameObj.uiStage)
-        im.addProcessor(MyGameObj.mainStage)
+        im.addProcessor(AppObj.uiStage)
+        im.addProcessor(AppObj.mainStage)
     }
 
     override fun hide() {
         val im = Gdx.input.inputProcessor as InputMultiplexer
         im.removeProcessor(this)
-        im.removeProcessor(MyGameObj.uiStage)
-        im.removeProcessor(MyGameObj.mainStage)
+        im.removeProcessor(AppObj.uiStage)
+        im.removeProcessor(AppObj.mainStage)
     }
 
     override fun pause() {

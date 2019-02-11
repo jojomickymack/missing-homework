@@ -14,9 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
-import com.badlogic.gdx.utils.viewport.FitViewport
+import com.badlogic.gdx.utils.viewport.StretchViewport
 
-object MyGameObj {
+
+object AppObj {
 
     lateinit var game: Game
 
@@ -24,21 +25,21 @@ object MyGameObj {
     val textButtonStyle = TextButtonStyle()
     val im = InputMultiplexer()
 
-    val fontGenerator = FreeTypeFontGenerator(Gdx.files.internal("assets/OpenSans.ttf"))
+    val fontGenerator = FreeTypeFontGenerator(Gdx.files.internal("OpenSans.ttf"))
     val fontParameters = FreeTypeFontGenerator.FreeTypeFontParameter()
     val customFont = fontGenerator.generateFont(fontParameters)
 
-    val buttonTex = Texture(Gdx.files.internal("assets/button.png"))
+    val buttonTex = Texture(Gdx.files.internal("button.png"))
     val buttonPatch = NinePatch(buttonTex, 24, 24, 24, 24)
 
-    val width = Gdx.graphics.width.toFloat()
-    val height = Gdx.graphics.height.toFloat()
+    var width = Gdx.graphics.height.toFloat()
+    var height = Gdx.graphics.width.toFloat()
 
     val sb = SpriteBatch()
     val cam = OrthographicCamera(width, height)
     val hud = OrthographicCamera(width, height)
-    val view = FitViewport(width, height, cam)
-    val hudView = FitViewport(width, height, hud)
+    val view = StretchViewport(480f, 360f, cam)
+    val hudView = StretchViewport(480f, 360f, hud)
     val mainStage = Stage(view, sb)
     val uiStage = Stage(hudView, sb)
 

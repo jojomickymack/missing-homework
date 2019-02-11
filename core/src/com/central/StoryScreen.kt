@@ -1,7 +1,6 @@
 package com.central
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input.Keys
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.Screen
@@ -20,22 +19,23 @@ import com.badlogic.gdx.utils.Align
 import ktx.actors.alpha
 import ktx.actors.plusAssign
 
-class StoryScreen : Screen, InputProcessor {
-    protected var uiTable = Table()
 
-    internal var background = Background()
-    internal var kelsoe = Dude()
-    internal var continueKey = Image(Texture("assets/key-C.png"))
-    internal var buttonTable = Table()
-    internal var theEnd = Image(Texture("assets/the-end.png"))
+class StoryScreen : Screen, InputProcessor {
+    private var uiTable = Table()
+
+    private var background = Background()
+    private var dude = Dude()
+    private var continueKey = Image(Texture("key-C.png"))
+    private var buttonTable = Table()
+    private var theEnd = Image(Texture("the-end.png"))
 
     var dialogBox = DialogBox()
 
     init {
-        MyGameObj.mainStage.clear()
-        MyGameObj.uiStage.clear()
+        AppObj.mainStage.clear()
+        AppObj.uiStage.clear()
 
-        dialogBox.setDialogSize(600f, 150f)
+        dialogBox.setDialogSize(AppObj.mainStage.width, AppObj.mainStage.height / 3)
         dialogBox.bgImage.color = Color(0.25f, 0.25f, 0.25f, 1f)
 
         buttonTable.isVisible = false
@@ -50,29 +50,29 @@ class StoryScreen : Screen, InputProcessor {
 
         uiTable.setFillParent(true)
 
-        theEnd.setPosition(MyGameObj.width / 2 - theEnd.width / 2, MyGameObj.height / 2 - theEnd.height / 2)
-        theEnd.setScale(2f)
+        theEnd.setSize(AppObj.mainStage.width, AppObj.mainStage.height / 3)
+        theEnd.setPosition(AppObj.mainStage.width / 2 - theEnd.width / 2, AppObj.mainStage.height / 2 - theEnd.height / 2)
         theEnd.alpha = 0f
 
-        MyGameObj.mainStage += background
-        MyGameObj.mainStage += kelsoe
-        MyGameObj.mainStage += theEnd
+        AppObj.mainStage += background
+        AppObj.mainStage += dude
+        AppObj.mainStage += theEnd
 
-        MyGameObj.uiStage += uiTable
-        MyGameObj.uiStage += continueKey
+        AppObj.uiStage += uiTable
+        AppObj.uiStage += continueKey
 
         hallway()
     }
 
     override fun render(delta: Float) {
-        MyGameObj.uiStage.act(delta)
-        MyGameObj.mainStage.act(delta)
+        AppObj.uiStage.act(delta)
+        AppObj.mainStage.act(delta)
 
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
-        MyGameObj.mainStage.draw()
-        MyGameObj.uiStage.draw()
+        AppObj.mainStage.draw()
+        AppObj.uiStage.draw()
     }
 
     fun hallway() {
@@ -81,21 +81,21 @@ class StoryScreen : Screen, InputProcessor {
         background.currentImage.setPosition(0f, 0f)
         background.currentImage += fadeIn(2f)
 
-        kelsoe.x = -50f
+        dude.x = -50f
 
         dialogBox.dialogLabel += sequence(
                 Actions.run {
-                    kelsoe += moveToAligned(MyGameObj.width / 2, 0f, Align.bottom, 2f)
+                    dude += moveToAligned(AppObj.mainStage.width / 2, 0f, Align.bottom, 2f)
                 },
                 TypewriterAction("My name is Kelsoe Kismet. I am a student at Aureus Ludus Academy."),
                 Actions.run {
-                    kelsoe.currentImage = kelsoe.sad
+                    dude.currentImage = dude.sad
                 },
                 TypewriterAction("I pooped, gotta go."),
                 Actions.run {
-                    kelsoe.currentImage = kelsoe.normal
+                    dude.currentImage = dude.normal
                     delay(2f)
-                    moveToAligned(MyGameObj.width / 2 - kelsoe.currentImage.width / 2, 0f, Align.bottom, 2f)
+                    moveToAligned(AppObj.mainStage.width / 2 - dude.currentImage.width / 2, 0f, Align.bottom, 2f)
                     delay(2f)
                     classroom()
                 }
@@ -106,24 +106,24 @@ class StoryScreen : Screen, InputProcessor {
         background.currentImage = background.classroom
         background.currentImage.alpha = 0f
         dialogBox.setText("")
-        kelsoe += moveToAligned(0f, 0f, Align.bottomLeft, 0f)
+        dude += moveToAligned(0f, 0f, Align.bottomLeft, 0f)
 
-        kelsoe += moveToAligned(MyGameObj.width / 2, 0f, Align.bottom, 2f)
+        dude += moveToAligned(AppObj.mainStage.width / 2, 0f, Align.bottom, 2f)
         background.currentImage += fadeIn(2f)
 
         dialogBox.dialogLabel += sequence(
                 TypewriterAction("This is my classroom. My homework isn't here, though."),
                 Actions.run {
-                    kelsoe.currentImage = kelsoe.sad
+                    dude.currentImage = dude.sad
                 },
                 TypewriterAction("Where should I look for my homework next?"),
                 Actions.run {
-                    kelsoe.currentImage = kelsoe.normal
+                    dude.currentImage = dude.normal
                     buttonTable += Actions.show()
                 }
         )
 
-        val scienceLabButton = TextButton("Look in the Science Lab", MyGameObj.textButtonStyle)
+        val scienceLabButton = TextButton("Look in the Science Lab", AppObj.textButtonStyle)
 
         scienceLabButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent, x: Float, y: Float) {
@@ -140,7 +140,7 @@ class StoryScreen : Screen, InputProcessor {
             }
         })
 
-        val libraryButton = TextButton("Look in the Library", MyGameObj.textButtonStyle)
+        val libraryButton = TextButton("Look in the Library", AppObj.textButtonStyle)
 
         libraryButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent, x: Float, y: Float) {
@@ -167,19 +167,19 @@ class StoryScreen : Screen, InputProcessor {
         background.currentImage = background.scienceLab
         background.currentImage.color.a = 0f
         dialogBox.setText("")
-        kelsoe += moveToAligned(0f, 0f, Align.bottomLeft, 0f)
+        dude += moveToAligned(0f, 0f, Align.bottomLeft, 0f)
 
         background.currentImage += fadeIn(2f)
-        kelsoe += moveToAligned(MyGameObj.width / 2, 0f, Align.bottom, 2f)
+        dude += moveToAligned(AppObj.mainStage.width / 2, 0f, Align.bottom, 2f)
 
         dialogBox.dialogLabel += sequence(
                 TypewriterAction("This is the science lab."),
                 TypewriterAction("My homework isn't here, though."),
                 Actions.run {
-                    kelsoe.currentImage = kelsoe.sad
+                    dude.currentImage = dude.sad
                 },
                 Actions.run {
-                    kelsoe.currentImage = kelsoe.normal
+                    dude.currentImage = dude.normal
                 },
                 TypewriterAction("Now where should I go?"),
                 Actions.run {
@@ -187,7 +187,7 @@ class StoryScreen : Screen, InputProcessor {
                 }
         )
 
-        val classroomButton = TextButton("Return to the Classroom", MyGameObj.textButtonStyle)
+        val classroomButton = TextButton("Return to the Classroom", AppObj.textButtonStyle)
 
         classroomButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent, x: Float, y: Float) {
@@ -204,7 +204,7 @@ class StoryScreen : Screen, InputProcessor {
             }
         })
 
-        val libraryButton = TextButton("Look in the Library", MyGameObj.textButtonStyle)
+        val libraryButton = TextButton("Look in the Library", AppObj.textButtonStyle)
 
         libraryButton.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent, x: Float, y: Float) {
@@ -212,7 +212,7 @@ class StoryScreen : Screen, InputProcessor {
                 dialogBox.dialogLabel += sequence(
                         TypewriterAction("That's a great idea. Maybe I left it in the library."),
                         Actions.run {
-                            background.addAction(Actions.fadeOut(1f))
+                            background.addAction(fadeOut(1f))
                         },
                         Actions.run {
                             library()
@@ -231,70 +231,70 @@ class StoryScreen : Screen, InputProcessor {
         background.currentImage = background.library
         background.currentImage.alpha = 0f
         dialogBox.setText("")
-        kelsoe += moveToAligned(0f, 0f, Align.bottomLeft, 0f)
+        dude += moveToAligned(0f, 0f, Align.bottomLeft, 0f)
 
         background.currentImage += fadeIn(2f)
-        kelsoe += moveToAligned(MyGameObj.width / 2, 0f, Align.bottom, 2f)
+        dude += moveToAligned(AppObj.mainStage.width / 2, 0f, Align.bottom, 2f)
 
         dialogBox.dialogLabel += sequence(
                 TypewriterAction("This is the library."),
                 TypewriterAction("Let me check the table where I was working earlier..."),
                 Actions.run {
-                    kelsoe.currentImage = kelsoe.lookRight
+                    dude.currentImage = dude.lookRight
                 },
                 Actions.run {
-                    kelsoe += moveToAligned(MyGameObj.width, 0f, Align.bottomRight, 2f)
+                    dude += moveToAligned(AppObj.mainStage.width, 0f, Align.bottomRight, 2f)
                 },
                 Actions.run {
-                    kelsoe.currentImage = kelsoe.normal
+                    dude.currentImage = dude.normal
                 },
                 TypewriterAction("Aha! Here it is!"),
                 Actions.run {
-                    kelsoe += moveToAligned(MyGameObj.width / 2, 0f, Align.bottom, 0.5f)
+                    dude += moveToAligned(AppObj.mainStage.width / 2, 0f, Align.bottom, 0.5f)
                 },
                 TypewriterAction("Thanks for helping me find it!"),
                 Actions.run {
                     uiTable += fadeOut(2f)
+                    continueKey += fadeOut(2f)
                     theEnd += fadeIn(2f)
                 },
                 delay(5f),
                 Actions.run {
-                    MyGameObj.game.screen = MenuScreen()
+                    AppObj.game.screen = MenuScreen()
                 }
         )
     }
 
     override fun keyDown(keyCode: Int): Boolean {
-        if (keyCode == Keys.C) {
-            if (dialogBox.dialogLabel.actions.size > 0) {
-                val seqAction = dialogBox.dialogLabel.actions.first() as SequenceAction
-                val actions = seqAction.actions
-                for (i in 0 until actions.size) {
-                    if (actions[i] is TypewriterAction) {
-                        val myAct = actions[i] as TypewriterAction
-                        if (myAct.completed) {
-                            seqAction.actions.removeIndex(i)
-                            break
-                        } else actions[i].act(100f)
-                    }
+        if (dialogBox.dialogLabel.actions.size > 0) {
+            val seqAction = dialogBox.dialogLabel.actions.first() as SequenceAction
+            val actions = seqAction.actions
+            for (i in 0 until actions.size) {
+                if (actions[i] is TypewriterAction) {
+                    val myAct = actions[i] as TypewriterAction
+                    if (myAct.completed) {
+                        seqAction.actions.removeIndex(i)
+                        break
+                    } else actions[i].act(100f)
                 }
             }
         }
+
         return false
     }
 
     override fun show() {
         val im = Gdx.input.inputProcessor as InputMultiplexer
         im.addProcessor(this)
-        im.addProcessor(MyGameObj.uiStage)
-        im.addProcessor(MyGameObj.mainStage)
+        im.addProcessor(AppObj.uiStage)
+        im.addProcessor(AppObj.mainStage)
     }
 
     override fun hide() {
         val im = Gdx.input.inputProcessor as InputMultiplexer
         im.removeProcessor(this)
-        im.removeProcessor(MyGameObj.uiStage)
-        im.removeProcessor(MyGameObj.mainStage)
+        im.removeProcessor(AppObj.uiStage)
+        im.removeProcessor(AppObj.mainStage)
     }
 
     override fun pause() {
@@ -334,6 +334,19 @@ class StoryScreen : Screen, InputProcessor {
     }
 
     override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
+        if (dialogBox.dialogLabel.actions.size > 0) {
+            val seqAction = dialogBox.dialogLabel.actions.first() as SequenceAction
+            val actions = seqAction.actions
+            for (i in 0 until actions.size) {
+                if (actions[i] is TypewriterAction) {
+                    val myAct = actions[i] as TypewriterAction
+                    if (myAct.completed) {
+                        seqAction.actions.removeIndex(i)
+                        break
+                    } else actions[i].act(100f)
+                }
+            }
+        }
         return false
     }
 }

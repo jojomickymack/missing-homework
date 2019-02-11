@@ -2,7 +2,6 @@ package com.central
 
 import com.badlogic.gdx.scenes.scene2d.Action
 import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.badlogic.gdx.scenes.scene2d.ui.Table
 
 class TypewriterAction(t: String) : Action() {
     private var elapsedTime: Float = 0.toFloat()

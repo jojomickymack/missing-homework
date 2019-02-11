@@ -6,24 +6,27 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 
 class Background : Actor() {
-    var hallway = Image(Texture("assets/bg-hallway.jpg"))
-    var classroom = Image(Texture("assets/bg-classroom.jpg"))
-    var scienceLab = Image(Texture("assets/bg-science-lab.jpg"))
-    var library = Image(Texture("assets/bg-library.jpg"))
+    var hallway = Image(Texture("bg-hallway.jpg"))
+    var classroom = Image(Texture("bg-classroom.jpg"))
+    var scienceLab = Image(Texture("bg-science-lab.jpg"))
+    var library = Image(Texture("bg-library.jpg"))
 
-    var currentImage = Image(Texture("assets/bg-science-lab.jpg"))
+    var currentImage = Image(Texture("bg-science-lab.jpg"))
 
     private var animationPaused = false
 
     init {
-        setSize(800f, 600f)
+        hallway.setSize(AppObj.mainStage.width, AppObj.mainStage.height)
+        classroom.setSize(AppObj.mainStage.width, AppObj.mainStage.height)
+        scienceLab.setSize(AppObj.mainStage.width, AppObj.mainStage.height)
+        library.setSize(AppObj.mainStage.width, AppObj.mainStage.height)
     }
 
     override fun act(delta: Float) {
-        if (!animationPaused) this.currentImage.act(delta)
+        if (!animationPaused) currentImage.act(delta)
     }
 
     override fun draw(batch: Batch, parentAlpha: Float) {
-        this.currentImage.draw(batch, parentAlpha)
+        currentImage.draw(batch, parentAlpha)
     }
 }

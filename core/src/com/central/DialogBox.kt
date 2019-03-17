@@ -1,7 +1,6 @@
 package com.central
 
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.Label
@@ -16,7 +15,7 @@ class DialogBox : Table() {
 
     private var animationPaused = false
 
-    var bgImage = Image(Texture("dialog-translucent.png"))
+    var bgImage = Image(AppObj.boxTex)
 
     init {
         bgImage.setSize(AppObj.mainStage.width, AppObj.mainStage.height / 3)

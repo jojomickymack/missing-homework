@@ -43,6 +43,32 @@ object AppObj {
     val mainStage = Stage(view, sb)
     val uiStage = Stage(hudView, sb)
 
+    /**
+     * all this right here where textures are loaded and disposed one by one is why AssetManager is provided
+     * it would achieve the same thing and require one call to dispose() on the AssetManager itself
+     */
+    // Background textures
+    val hallwayTex = Texture("bg-hallway.jpg")
+    val classroomTex = Texture("bg-classroom.jpg")
+    val scienceLabTex = Texture("bg-science-lab.jpg")
+    val libraryTex = Texture("bg-library.jpg")
+
+    // Dialog Box Textures
+    val boxTex = Texture("dialog-translucent.png")
+    val cButtonTex = Texture("key-C.png")
+    val endTex = Texture("the-end.png")
+
+    // Dude textures
+    val normalTex = Texture("kelsoe-normal.png")
+    val sadTex = Texture("kelsoe-sad.png")
+    val lookLeftTex = Texture("kelsoe-look-left.png")
+    val lookRightTex = Texture("kelsoe-look-right.png")
+
+    // Menu textures
+    val notebookTex = Texture("notebook.jpg")
+    val titleTex = Texture("missing-homework.png")
+
+
     init {
         Gdx.input.inputProcessor = im
 
@@ -63,5 +89,32 @@ object AppObj {
             font = customFont
             fontColor = GRAY
         }
+    }
+
+    fun dispose() {
+        this.fontGenerator.dispose()
+        this.customFont.dispose()
+
+        this.buttonTex.dispose()
+
+        this.sb.dispose()
+        this.mainStage.dispose()
+        this.uiStage.dispose()
+
+        this.hallwayTex.dispose()
+        this.classroomTex.dispose()
+        this.scienceLabTex.dispose()
+
+        this.boxTex.dispose()
+        this.cButtonTex.dispose()
+        this.endTex.dispose()
+
+        this.normalTex.dispose()
+        this.sadTex.dispose()
+        this.lookLeftTex.dispose()
+        this.lookRightTex.dispose()
+
+        this.notebookTex.dispose()
+        this.titleTex.dispose()
     }
 }

@@ -7,4 +7,10 @@ class App : Game() {
         AppObj.game = this
         AppObj.game.screen = MenuScreen()
     }
+
+    override fun dispose() {
+        AppObj.dispose()
+        println("all disposable memory freed")
+        super.dispose()
+    }
 }

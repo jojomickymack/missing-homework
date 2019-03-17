@@ -6,7 +6,6 @@ import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.Texture
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.ui.Image
@@ -19,11 +18,11 @@ class MenuScreen : Screen, InputProcessor {
     private var uiTable = Table()
 
     init {
-        val notebook = Image(Texture("notebook.jpg"))
+        val notebook = Image(AppObj.notebookTex)
         notebook.setPosition(0f, 0f)
         notebook.setSize(800f, 600f)
 
-        val title = Image(Texture("missing-homework.png"))
+        val title = Image(AppObj.titleTex)
         title.setPosition(0f, 0f)
 
         val startButton = TextButton("Start", AppObj.textButtonStyle)

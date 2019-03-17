@@ -25,9 +25,9 @@ class StoryScreen : Screen, InputProcessor {
 
     private var background = Background()
     private var dude = Dude()
-    private var continueKey = Image(Texture("key-C.png"))
+    private var continueKey = Image(AppObj.cButtonTex)
     private var buttonTable = Table()
-    private var theEnd = Image(Texture("the-end.png"))
+    private var theEnd = Image(AppObj.endTex)
 
     var dialogBox = DialogBox()
 
@@ -97,11 +97,11 @@ class StoryScreen : Screen, InputProcessor {
                 },
                 TypewriterAction("My name is Kelsoe Kismet. I am a student at Aureus Ludus Academy."),
                 Actions.run {
-                    dude.currentImage = dude.sad
+                    dude.currentImage = AppObj.sadTex
                 },
                 TypewriterAction("I pooped, gotta go."),
                 Actions.run {
-                    dude.currentImage = dude.normal
+                    dude.currentImage = AppObj.normalTex
                     delay(2f)
                     moveToAligned(AppObj.mainStage.width / 2 - dude.currentImage.width / 2, 0f, Align.bottom, 2f)
                     delay(2f)
@@ -122,11 +122,11 @@ class StoryScreen : Screen, InputProcessor {
         dialogBox.dialogLabel += sequence(
                 TypewriterAction("This is my classroom. My homework isn't here, though."),
                 Actions.run {
-                    dude.currentImage = dude.sad
+                    dude.currentImage = AppObj.sadTex
                 },
                 TypewriterAction("Where should I look for my homework next?"),
                 Actions.run {
-                    dude.currentImage = dude.normal
+                    dude.currentImage = AppObj.normalTex
                     buttonTable += Actions.show()
                 }
         )
@@ -184,10 +184,10 @@ class StoryScreen : Screen, InputProcessor {
                 TypewriterAction("This is the science lab."),
                 TypewriterAction("My homework isn't here, though."),
                 Actions.run {
-                    dude.currentImage = dude.sad
+                    dude.currentImage = AppObj.sadTex
                 },
                 Actions.run {
-                    dude.currentImage = dude.normal
+                    dude.currentImage = AppObj.normalTex
                 },
                 TypewriterAction("Now where should I go?"),
                 Actions.run {
@@ -248,13 +248,13 @@ class StoryScreen : Screen, InputProcessor {
                 TypewriterAction("This is the library."),
                 TypewriterAction("Let me check the table where I was working earlier..."),
                 Actions.run {
-                    dude.currentImage = dude.lookRight
+                    dude.currentImage = AppObj.lookRightTex
                 },
                 Actions.run {
                     dude += moveToAligned(AppObj.mainStage.width, 0f, Align.bottomRight, 2f)
                 },
                 Actions.run {
-                    dude.currentImage = dude.normal
+                    dude.currentImage = AppObj.normalTex
                 },
                 TypewriterAction("Aha! Here it is!"),
                 Actions.run {

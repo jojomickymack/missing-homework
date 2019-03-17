@@ -1,17 +1,16 @@
 package com.central
 
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 
 class Background : Actor() {
-    var hallway = Image(Texture("bg-hallway.jpg"))
-    var classroom = Image(Texture("bg-classroom.jpg"))
-    var scienceLab = Image(Texture("bg-science-lab.jpg"))
-    var library = Image(Texture("bg-library.jpg"))
+    var hallway = Image(AppObj.hallwayTex)
+    var classroom = Image(AppObj.classroomTex)
+    var scienceLab = Image(AppObj.scienceLabTex)
+    var library = Image(AppObj.libraryTex)
 
-    var currentImage = Image(Texture("bg-science-lab.jpg"))
+    var currentImage = Image(AppObj.hallwayTex)
 
     private var animationPaused = false
 
